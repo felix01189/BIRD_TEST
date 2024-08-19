@@ -116,6 +116,7 @@ def get_schema_from_json(fpath):
 def tokenize(string):
     string = str(string)
     string = string.replace("\'", "\"")  # ensures all string values wrapped by "" problem??
+    string = string.replace("`", "\"")  # for bird
     quote_idxs = [idx for idx, char in enumerate(string) if char == '"']
     assert len(quote_idxs) % 2 == 0, "Unexpected quote"
 
@@ -181,8 +182,8 @@ def parse_col(toks, start_idx, tables_with_alias, schema, default_tables=None):
 
     for alias in default_tables:
         table = tables_with_alias[alias]
-        if tok in schema.schema[table]:
-            key = table + "." + tok
+        if tok.lower().replace("\"","") in schema.schema[table]:
+            key = table + "." + tok.lower().replace("\"","")
             return start_idx+1, schema.idMap[key]
 
     assert False, "Error col: {}".format(tok)

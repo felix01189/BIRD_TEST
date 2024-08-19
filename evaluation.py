@@ -571,15 +571,15 @@ def evaluate(gold, predict, db_dir, etype, kmaps, plug_value, keep_distinct, pro
             db_name = db
             db = os.path.join(db_dir, db, db + ".sqlite")
             schema = Schema(get_schema(db))
-            g_sql = get_sql(schema, g_str)
-            hardness = evaluator.eval_hardness(g_sql)
+            # g_sql = get_sql(schema, g_str)
+            # hardness = evaluator.eval_hardness(g_sql)
             if idx > 3:
                 idx = "> 4"
             else:
                 idx += 1
             turn_id = "turn " + str(idx)
             scores[turn_id]['count'] += 1
-            scores[hardness]['count'] += 1
+            # scores[hardness]['count'] += 1
             scores['all']['count'] += 1
 
             try:
@@ -609,7 +609,7 @@ def evaluate(gold, predict, db_dir, etype, kmaps, plug_value, keep_distinct, pro
                 exec_score = eval_exec_match(db=db, p_str=p_str, g_str=g_str, plug_value=plug_value,
                                              keep_distinct=keep_distinct, progress_bar_for_each_datapoint=progress_bar_for_each_datapoint)
                 if exec_score:
-                    scores[hardness]['exec'] += 1
+                    # scores[hardness]['exec'] += 1
                     scores[turn_id]['exec'] += 1
                     scores['all']['exec'] += 1
                     turn_scores['exec'].append(1)

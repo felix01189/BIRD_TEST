@@ -94,6 +94,7 @@ def get_schema(db):
 
     # fetch table info
     for table in tables:
+        table = f'"{table}"'
         cursor.execute("PRAGMA table_info({})".format(table))
         schema[table] = [str(col[1].lower()) for col in cursor.fetchall()]
 
